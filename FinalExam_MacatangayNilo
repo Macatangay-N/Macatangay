@@ -91,14 +91,14 @@ purchases = 250
 prior_alpha = 1
 prior_beta = 19
 
-# Posterior parameters
+# Posterior update
 posterior_alpha = prior_alpha + purchases
 posterior_beta = prior_beta + (visitors - purchases)
 
-# Sample from the posterior
+# Generate posterior samples
 posterior_samples = np.random.beta(posterior_alpha, posterior_beta, 10000)
 
-# Plot the posterior distribution
+# Plot posterior distribution
 plt.figure(figsize=(8, 6))
 plt.hist(posterior_samples, bins=50, density=True, color='plum', edgecolor='black', alpha=0.7)
 plt.title('Posterior Distribution of Purchase Rate')
@@ -107,7 +107,7 @@ plt.ylabel('Density')
 plt.grid(True)
 plt.show()
 
-# Summary statistics
+# Calculate
 mean_purchase_rate = posterior_alpha / (posterior_alpha + posterior_beta)
 mode_purchase_rate = (posterior_alpha - 1) / (posterior_alpha + posterior_beta - 2) if posterior_alpha > 1 and posterior_beta > 1 else np.nan
 
