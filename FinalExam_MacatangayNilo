@@ -1,0 +1,115 @@
+# SAMPLE 1: Predicting Email Click Through Rate
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data
+total_emails_sent = 2000
+emails_clicked = 120
+
+# Prior hyperparameters for the Beta distribution
+# Assume weakly informative prior (Beta(2, 10)), expecting low CTR
+prior_alpha = 2
+prior_beta = 10
+
+# Posterior update
+posterior_alpha = prior_alpha + emails_clicked
+posterior_beta = prior_beta + (total_emails_sent - emails_clicked)
+
+# Generate posterior samples
+posterior_samples = np.random.beta(posterior_alpha, posterior_beta, size=10000)
+
+# Plot the posterior distribution
+plt.figure(figsize=(8, 6))
+plt.hist(posterior_samples, bins=30, density=True, color='salmon', edgecolor='black', alpha=0.7)
+plt.title('Posterior Distribution of Click-Through Rate (CTR)')
+plt.xlabel('Click-Through Rate')
+plt.ylabel('Density')
+plt.xlim(0, 0.15)  # Adjust to likely CTR range
+plt.grid(True)
+plt.show()
+
+# Calculate
+mean_ctr = posterior_alpha / (posterior_alpha + posterior_beta)
+mode_ctr = (posterior_alpha - 1) / (posterior_alpha + posterior_beta - 2) if posterior_alpha > 1 and posterior_beta > 1 else np.nan
+
+print("Mean Click-Through Rate:", round(mean_ctr, 4))
+print("Mode Click-Through Rate:", round(mode_ctr, 4))
+
+
+
+
+# SAMPLE 2: Estimating Patient Recovery Rate
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data
+patients_treated = 500
+patients_recovered = 275
+
+# Prior parameters (Beta(5, 5))
+prior_alpha = 5
+prior_beta = 5
+
+# Posterior update
+posterior_alpha = prior_alpha + patients_recovered
+posterior_beta = prior_beta + (patients_treated - patients_recovered)
+
+# Generate posterior samples
+posterior_samples = np.random.beta(posterior_alpha, posterior_beta, 10000)
+
+# Plot posterior distribution
+plt.figure(figsize=(8, 6))
+plt.hist(posterior_samples, bins=40, density=True, color='cornflowerblue', edgecolor='black', alpha=0.7)
+plt.title('Posterior Distribution of Recovery Rate')
+plt.xlabel('Recovery Rate')
+plt.ylabel('Density')
+plt.grid(True)
+plt.show()
+
+# Calculate
+mean_recovery = posterior_alpha / (posterior_alpha + posterior_beta)
+mode_recovery = (posterior_alpha - 1) / (posterior_alpha + posterior_beta - 2) if posterior_alpha > 1 and posterior_beta > 1 else np.nan
+
+print("Mean Recovery Rate:", round(mean_recovery, 4))
+print("Mode Recovery Rate:", round(mode_recovery, 4))
+
+
+
+
+# SAMPLE 3: Estimating Website Purchase Rate
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data
+visitors = 5000
+purchases = 250
+
+# Prior parameters (Beta(1, 19))
+prior_alpha = 1
+prior_beta = 19
+
+# Posterior parameters
+posterior_alpha = prior_alpha + purchases
+posterior_beta = prior_beta + (visitors - purchases)
+
+# Sample from the posterior
+posterior_samples = np.random.beta(posterior_alpha, posterior_beta, 10000)
+
+# Plot the posterior distribution
+plt.figure(figsize=(8, 6))
+plt.hist(posterior_samples, bins=50, density=True, color='plum', edgecolor='black', alpha=0.7)
+plt.title('Posterior Distribution of Purchase Rate')
+plt.xlabel('Purchase Rate')
+plt.ylabel('Density')
+plt.grid(True)
+plt.show()
+
+# Summary statistics
+mean_purchase_rate = posterior_alpha / (posterior_alpha + posterior_beta)
+mode_purchase_rate = (posterior_alpha - 1) / (posterior_alpha + posterior_beta - 2) if posterior_alpha > 1 and posterior_beta > 1 else np.nan
+
+print("Mean Purchase Rate:", round(mean_purchase_rate, 4))
+print("Mode Purchase Rate:", round(mode_purchase_rate, 4))
